@@ -53,7 +53,7 @@ body:
     id: command
     attributes:
       label: Command run
-      description: The exact command you ran.
+      description: The exact command you ran. Please remove private paths and repository names first.
       render: shell
     validations:
       required: true
@@ -68,14 +68,14 @@ body:
     id: actual
     attributes:
       label: Actual behavior
-      description: What happened instead. Include any error message.
+      description: What happened instead. Include any error message. Please remove private paths and repository names first.
     validations:
       required: true
   - type: textarea
     id: json-output
     attributes:
       label: Output with --json
-      description: Run the same command with `--json` and paste the output. Please remove private paths and repository names first.
+      description: If the command supports `--json`, run it again with `--json` and paste the output. Please remove private paths and repository names first.
       render: json
   - type: checkboxes
     id: searched

@@ -9,7 +9,7 @@ body:
     id: user-story
     attributes:
       label: User story
-      value: |
+      placeholder: |
         As a ...,
         I want ...,
         So that ...
