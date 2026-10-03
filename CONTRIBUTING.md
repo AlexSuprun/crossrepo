@@ -2,6 +2,12 @@
 
 Thanks for your interest in crossrepo. This guide explains how to contribute.
 
+## Setup
+
+1. Install [Bun](https://bun.sh) 1.4.2. This is the version in `packageManager` in `package.json`.
+2. Run `bun install`. This installs the dev tools and turns on the pre-commit hook in `.githooks/`, which rejects a commit when a staged file is not formatted. Run `bun run format` to fix the format.
+3. Run `bun run validate`. It runs lint, typecheck, tests and the build. Run it before you open a pull request.
+
 ## Open an issue first for big changes
 
 For a big change, open an issue first and describe what you want to do. This lets us agree on the approach before you write code. Small fixes, such as typos, can go straight to a pull request.
