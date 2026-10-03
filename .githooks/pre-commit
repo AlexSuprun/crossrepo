@@ -1,0 +1,3 @@
+#!/bin/sh
+# Rejects the commit when a staged file is not formatted. Fix with: bun run format
+exec bun run biome format --staged --no-errors-on-unmatched

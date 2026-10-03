@@ -2,6 +2,20 @@
 
 Instructions for AI agents working on crossrepo. These rules apply as code arrives in the repo.
 
+## Commands
+
+- `bun install`: install dev tools and turn on the pre-commit format check.
+- `bun run validate`: run lint, typecheck, tests and the build, and stop at the first failure. Run it before you finish a change.
+- `bun run lint`: lint and format check with Biome.
+- `bun run format`: fix lint and format issues that Biome can fix.
+- `bun run typecheck`: typecheck `src/` and, separately, `tests/` and `scripts/`.
+- `bun run test`: run the tests with the coverage floor.
+- `bun run build`: bundle the CLI to `dist/xr.js`.
+
+Tests and `scripts/` may use `Bun`. `src/` may not: a Biome rule on `src/` rejects the `Bun` global and imports of `bun` and `bun:*`.
+
+For Conventional Commits, changesets and docs in the same pull request, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Layers
 
 Code in `src/` follows this layer order:
