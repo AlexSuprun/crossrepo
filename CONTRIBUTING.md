@@ -4,7 +4,7 @@ Thanks for your interest in crossrepo. This guide explains how to contribute.
 
 ## Setup
 
-1. Install [Bun](https://bun.sh) 1.4.2. This is the version in `packageManager` in `package.json`.
+1. Install [Bun](https://bun.sh) at the version in `packageManager` in `package.json`.
 2. Run `bun install`. This installs the dev tools and turns on the pre-commit hook in `.githooks/`, which rejects a commit when a staged file is not formatted. Run `bun run format` to fix the format.
 3. Run `bun run validate`. It runs lint, typecheck, tests and the build. Run it before you open a pull request.
 
@@ -30,7 +30,11 @@ Use [Conventional Commits](https://www.conventionalcommits.org/) such as `feat: 
 
 ## CI
 
-Every pull request runs CI on Linux, macOS and Windows: `checks` (lint, typecheck, unit, adapter and command tests), `smoke` (smoke tests under Node 22.13 and Node 24), `bun-only` (the bundle under Bun 1.4.2 and 1.3.0 with Node removed from PATH) and `pr-title`. All of them must pass before merge.
+Every pull request runs CI on Linux, macOS and Windows: `checks` (lint, typecheck, unit, adapter and command tests), `smoke` (smoke tests under Node 22.13 and Node 24), `bun-only` (the bundle under the pinned Bun and Bun 1.3.0 with Node removed from PATH) and `pr-title`. All of them must pass before merge.
+
+## Dependency updates
+
+[Renovate](https://docs.renovatebot.com/) keeps dev dependencies, GitHub Action hashes and the Bun version in `packageManager` up to date (see `renovate.json`). Every Monday it opens grouped pull requests with the `dependencies` label: one for all minor and patch updates, one for each major update and one for Bun. The "Dependency Dashboard" issue lists pending and upcoming updates. You do not need to bump these by hand.
 
 ## Changesets
 

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigestsToSemver",
+    "group:allNonMajor",
+    "schedule:weekly"
+  ],
+  "semanticCommits": "enabled",
+  "labels": ["dependencies"],
+  "minimumReleaseAge": "3 days",
+  "packageRules": [
+    {
+      "description": "Keep @types/node on the Node floor in engines.node; raise this limit when engines.node is raised.",
+      "matchPackageNames": ["@types/node"],
+      "allowedVersions": "<23"
+    },
+    {
+      "matchPackageNames": ["bun", "@types/bun"],
+      "groupName": "bun"
+    }
+  ]
+}
