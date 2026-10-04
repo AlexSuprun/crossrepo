@@ -9,7 +9,11 @@ Instructions for AI agents working on crossrepo. These rules apply as code arriv
 - `bun run lint`: lint and format check with Biome.
 - `bun run format`: fix lint and format issues that Biome can fix.
 - `bun run typecheck`: typecheck `src/` and, separately, `tests/` and `scripts/`.
-- `bun run test`: run the tests with the coverage floor.
+- `bun run test`: run the unit, adapter and command tests with the coverage floor. It does not run smoke tests.
+- `bun run test:unit`: run the tests in `tests/unit/`.
+- `bun run test:adapters`: run the tests in `tests/adapters/`.
+- `bun run test:commands`: run the tests in `tests/commands/`.
+- `bun run test:smoke`: build `dist/xr.js`, then run the `*.smoke.ts` files in `tests/smoke/` against it under Node and under Bun.
 - `bun run build`: bundle the CLI to `dist/xr.js`.
 
 Tests and `scripts/` may use `Bun`. `src/` may not: a Biome rule on `src/` rejects the `Bun` global and imports of `bun` and `bun:*`.
@@ -24,17 +28,30 @@ Code in `src/` follows this layer order:
 cli → commands → services → domain + adapters
 ```
 
-- `domain` imports only `errors`.
-- Commands never import each other.
-- Services never import commands.
-- `config` and `output` import nothing else from crossrepo.
-- Only adapters, `config` and `output` touch `node:fs` and `node:child_process`.
+Each folder in `src/` is one layer. A layer may import only the layers in its row. Imports inside one layer are allowed, except that one command never imports another command.
+
+| Layer | Folder | May import |
+| --- | --- | --- |
+| cli | `src/cli/` | commands, adapters, config, output, errors |
+| commands | `src/commands/<group>/<command>` | services, runners, domain, errors (config and output only through `ctx`) |
+| services | `src/services/` | other services (no cycles), domain, adapters, errors (config and output only through `ctx`) |
+| runners | `src/runners/` | adapters, errors |
+| domain | `src/domain/` | errors |
+| adapters | `src/adapters/` | errors, and only `writeFileAtomic` from config |
+| config | `src/config/` | nothing else from crossrepo |
+| output | `src/output/` | nothing else from crossrepo |
+| errors | `src/errors/` | nothing (leaf) |
+
+- Only adapters, `config` and `output` import `node:fs` and `node:child_process`.
 - `src/` uses `node:` APIs only, never `Bun`.
+- `tests/unit/layers.test.ts` checks these rules on every import in `src/`.
 
 ## Tests
 
 - Use test-driven development: write a failing test first, then the code that makes it pass.
 - Tests have a coverage floor. Do not lower it.
+- Tests live in one folder per level: `tests/unit/`, `tests/adapters/`, `tests/commands/` and `tests/smoke/`. Shared test code goes in `tests/helpers/`.
+- Smoke test files are named `*.smoke.ts`, so `bun test` skips them. Run them with `bun run test:smoke`.
 
 ## Docs
 

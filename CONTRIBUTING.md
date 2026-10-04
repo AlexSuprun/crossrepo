@@ -8,6 +8,14 @@ Thanks for your interest in crossrepo. This guide explains how to contribute.
 2. Run `bun install`. This installs the dev tools and turns on the pre-commit hook in `.githooks/`, which rejects a commit when a staged file is not formatted. Run `bun run format` to fix the format.
 3. Run `bun run validate`. It runs lint, typecheck, tests and the build. Run it before you open a pull request.
 
+## Test scripts
+
+- `bun run test`: run all tests except smoke tests, with the coverage floor.
+- `bun run test:unit`: run the tests in `tests/unit/`.
+- `bun run test:adapters`: run the tests in `tests/adapters/`.
+- `bun run test:commands`: run the tests in `tests/commands/`.
+- `bun run test:smoke`: build `dist/xr.js`, then run the smoke tests (`tests/smoke/*.smoke.ts`) against it under Node and under Bun. Node and Bun must both be installed.
+
 ## Open an issue first for big changes
 
 For a big change, open an issue first and describe what you want to do. This lets us agree on the approach before you write code. Small fixes, such as typos, can go straight to a pull request.
