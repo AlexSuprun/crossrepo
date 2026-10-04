@@ -18,6 +18,8 @@ Instructions for AI agents working on crossrepo. These rules apply as code arriv
 
 CI (`.github/workflows/ci.yml`) runs `lint`, `typecheck`, `test:unit`, `test:adapters`, `test:commands` and `test:smoke` on Linux, macOS and Windows. Set `XR_SMOKE_RUNTIMES=bun` (a comma list of `node` and `bun`; default both) to run the smoke tests under Bun only.
 
+Renovate (`renovate.json`) updates dependencies, Action hashes and the Bun version. Do not bump pins by hand, and set the Bun version only in `packageManager` in `package.json`.
+
 Tests and `scripts/` may use `Bun`. `src/` may not: a Biome rule on `src/` rejects the `Bun` global and imports of `bun` and `bun:*`.
 
 For Conventional Commits, changesets and docs in the same pull request, see [CONTRIBUTING.md](CONTRIBUTING.md).
