@@ -16,6 +16,8 @@ Instructions for AI agents working on crossrepo. These rules apply as code arriv
 - `bun run test:smoke`: build `dist/xr.js`, then run the `*.smoke.ts` files in `tests/smoke/` against it under Node and under Bun.
 - `bun run build`: bundle the CLI to `dist/xr.js`.
 
+CI (`.github/workflows/ci.yml`) runs `lint`, `typecheck`, `test:unit`, `test:adapters`, `test:commands` and `test:smoke` on Linux, macOS and Windows. Set `XR_SMOKE_RUNTIMES=bun` (a comma list of `node` and `bun`; default both) to run the smoke tests under Bun only.
+
 Tests and `scripts/` may use `Bun`. `src/` may not: a Biome rule on `src/` rejects the `Bun` global and imports of `bun` and `bun:*`.
 
 For Conventional Commits, changesets and docs in the same pull request, see [CONTRIBUTING.md](CONTRIBUTING.md).

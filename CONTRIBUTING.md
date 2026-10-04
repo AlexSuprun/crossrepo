@@ -28,6 +28,10 @@ Write a failing test first, then the code that makes it pass. A bug fix starts w
 
 Use [Conventional Commits](https://www.conventionalcommits.org/) such as `feat: ...`, `fix: ...` or `docs: ...`. Pull requests are squash merged and the PR title becomes the commit message, so the PR title is checked.
 
+## CI
+
+Every pull request runs CI on Linux, macOS and Windows: `checks` (lint, typecheck, unit, adapter and command tests), `smoke` (smoke tests under Node 22.13 and Node 24), `bun-only` (the bundle under Bun 1.4.2 and 1.3.0 with Node removed from PATH) and `pr-title`. All of them must pass before merge.
+
 ## Changesets
 
 Once releases start, every pull request adds one changeset that describes the change for the changelog.
