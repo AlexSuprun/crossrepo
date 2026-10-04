@@ -2,16 +2,14 @@ import { describe, expect, test } from "bun:test";
 import { spawnSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { smokeRuntimes } from "../helpers/smoke-runtimes.ts";
 
 const bundle = fileURLToPath(new URL("../../dist/xr.js", import.meta.url));
 const packageJson = JSON.parse(
   readFileSync(new URL("../../package.json", import.meta.url), "utf8"),
 ) as { version: string };
 
-const runtimes = [
-  ["node", "node"],
-  ["bun", process.execPath],
-] as const;
+const runtimes = smokeRuntimes(process.env.XR_SMOKE_RUNTIMES, process.execPath);
 
 describe.each(runtimes)("dist/xr.js under %s", (_name, command) => {
   test("--version prints the package.json version and exits 0", () => {
