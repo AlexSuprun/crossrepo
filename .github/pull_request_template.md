@@ -10,7 +10,6 @@ Closes #
 
 <!-- Check each item, or write "N/A" and the reason when an item does not apply. -->
 <!-- Until the dev tooling exists, mark `bun run validate` as "N/A: dev tooling not set up yet". -->
-<!-- Until the release flow exists, mark the changeset as "N/A: release flow not set up yet". -->
 
 - [ ] Tests written first (TDD)
 - [ ] `bun run validate` passes
