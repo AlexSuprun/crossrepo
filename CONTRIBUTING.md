@@ -38,7 +38,23 @@ Every pull request runs CI. On Linux, macOS and Windows: `checks` (lint, typeche
 
 ## Changesets
 
-Once releases start, every pull request adds one changeset that describes the change for the changelog.
+Every pull request adds one changeset. A changeset is a small file in `.changeset/` that says which version bump the change needs and describes it for the changelog.
+
+- Run `bunx changeset`, pick the bump (`patch`, `minor` or `major`) and write one line for users. Commit the new file with your change.
+- For a change that users do not see, such as docs-only or CI-only changes, run `bunx changeset --empty`. It adds a changeset with no bump.
+- Renovate pull requests need no changeset. Updated bundled libraries reach users with the next release that has a real change, and the changelog does not list them. When an update fixes a real bug for users, the maintainer may add a changeset to that Renovate pull request.
+- The `chore: version packages` pull request needs no changeset.
+
+The [changeset-bot](https://github.com/apps/changeset-bot) comments on a pull request that has no changeset. The comment is a reminder only and does not block the merge.
+
+### How a release happens
+
+1. A pull request with a changeset is merged into `master`.
+2. The release workflow (`.github/workflows/release.yml`) opens or updates the `chore: version packages` pull request. It bumps the version in `package.json` and adds the entry to `CHANGELOG.md`.
+3. The maintainer reviews and merges that pull request.
+4. The release workflow publishes the new version to npm with provenance, creates the `vX.Y.Z` tag and the GitHub Release, and then installs the published version with npm, Bun and `bunx` to check that `--version` works.
+
+Publishing uses npm Trusted Publishing, so there is no npm token.
 
 ## Docs in the same pull request
 

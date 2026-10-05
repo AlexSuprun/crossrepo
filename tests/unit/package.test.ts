@@ -1,5 +1,6 @@
 import { describe, expect, test } from "bun:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
+import { parse } from "yaml";
 
 const pkg = JSON.parse(
   readFileSync(new URL("../../package.json", import.meta.url), "utf8"),
@@ -51,6 +52,15 @@ describe("package.json publish contract", () => {
     );
   });
 
+  // A publish must rebuild dist/ so a stale bundle or version never ships.
+  test("scripts.prepublishOnly builds the bundle", () => {
+    expect(pkg.scripts?.prepublishOnly).toBe("bun run build");
+  });
+
+  test("scripts.release is changeset publish", () => {
+    expect(pkg.scripts?.release).toBe("changeset publish");
+  });
+
   test("description is not empty", () => {
     expect(typeof pkg.description).toBe("string");
     expect(pkg.description.trim()).not.toBe("");
@@ -85,4 +95,74 @@ describe("package.json publish contract", () => {
       expect(size).toBe(0);
     });
   }
+});
+
+// These files break publishing only on master, so PR checks must catch drift.
+describe(".changeset/config.json", () => {
+  const config = JSON.parse(
+    readFileSync(
+      new URL("../../.changeset/config.json", import.meta.url),
+      "utf8",
+    ),
+  );
+
+  test("baseBranch is master", () => {
+    expect(config.baseBranch).toBe("master");
+  });
+
+  test("access is public", () => {
+    expect(config.access).toBe("public");
+  });
+
+  test("the changelog module is a devDependency", () => {
+    expect(pkg.devDependencies?.[config.changelog[0]]).toBeDefined();
+  });
+
+  test("changelog uses changelog-github for alexsuprun/crossrepo", () => {
+    expect(config.changelog).toEqual([
+      "@changesets/changelog-github",
+      { repo: "alexsuprun/crossrepo" },
+    ]);
+  });
+});
+
+// The npm Trusted Publisher fixes the file name release.yml and environment npm.
+describe(".github/workflows/release.yml", () => {
+  const url = new URL("../../.github/workflows/release.yml", import.meta.url);
+
+  test("the file exists", () => {
+    expect(existsSync(url)).toBe(true);
+  });
+
+  const workflow = existsSync(url) ? parse(readFileSync(url, "utf8")) : {};
+  const jobs: Record<string, { environment?: unknown; permissions?: unknown }> =
+    workflow.jobs ?? {};
+
+  test("jobs.release uses environment npm", () => {
+    expect(jobs.release?.environment).toBe("npm");
+  });
+
+  // Tests and dev tools run in "check", away from the job that can mint the OIDC token.
+  test("jobs.release needs jobs.check", () => {
+    expect(jobs.check).toBeDefined();
+    expect((jobs.release as { needs?: unknown } | undefined)?.needs).toBe(
+      "check",
+    );
+  });
+
+  test("top-level permissions are contents: read", () => {
+    expect(workflow.permissions).toEqual({ contents: "read" });
+  });
+
+  test("id-token: write is set only on jobs.release", () => {
+    const withIdToken = Object.entries(jobs)
+      .filter(
+        ([, job]) =>
+          (job.permissions as Record<string, string> | undefined)?.[
+            "id-token"
+          ] === "write",
+      )
+      .map(([name]) => name);
+    expect(withIdToken).toEqual(["release"]);
+  });
 });

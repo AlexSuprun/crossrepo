@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@4.0.1/schema.json",
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "alexsuprun/crossrepo" }
+  ],
+  "commit": false,
+  "fixed": [],
+  "linked": [],
+  "access": "public",
+  "baseBranch": "master",
+  "format": "auto",
+  "updateInternalDependencies": "patch",
+  "ignore": []
+}

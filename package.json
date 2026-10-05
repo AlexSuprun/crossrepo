@@ -45,10 +45,13 @@
     "test:smoke": "bun run build && bun --config=bunfig.smoke.toml test ./tests/smoke/*.smoke.ts",
     "build": "bun build src/cli/bin.ts --target node --outfile dist/xr.js --define XR_VERSION=\\\"$npm_package_version\\\"",
     "validate": "bun run lint && bun run typecheck && bun run test && bun run test:smoke",
+    "release": "changeset publish",
+    "prepublishOnly": "bun run build",
     "prepare": "git config core.hooksPath .githooks"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.14",
+    "@changesets/changelog-github": "1.0.1",
     "@changesets/cli": "3.0.3",
     "@clack/prompts": "1.8.1",
     "@types/bun": "1.4.2",
