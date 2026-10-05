@@ -18,6 +18,11 @@
     {
       "matchPackageNames": ["bun", "@types/bun"],
       "groupName": "bun"
+    },
+    {
+      "description": "Update the docs site apart from the CLI, so a docs build break does not block CLI updates.",
+      "matchFileNames": ["docs/**"],
+      "groupName": "docs site"
     }
   ]
 }
