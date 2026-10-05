@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Ask a question
-    url: https://github.com/AlexSuprun/crossrepo/discussions
+    url: https://github.com/alexsuprun/crossrepo/discussions
     about: Ask and answer questions in GitHub Discussions.
   - name: Report a security vulnerability
-    url: https://github.com/AlexSuprun/crossrepo/security/advisories/new
+    url: https://github.com/alexsuprun/crossrepo/security/advisories/new
     about: Report security issues privately. Please do not open a public issue.

@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Report security issues only through GitHub private vulnerability reporting: [open a private report](https://github.com/AlexSuprun/crossrepo/security/advisories/new).
+Report security issues only through GitHub private vulnerability reporting: [open a private report](https://github.com/alexsuprun/crossrepo/security/advisories/new).
 
 Never report a vulnerability in a public issue, pull request or discussion.
 

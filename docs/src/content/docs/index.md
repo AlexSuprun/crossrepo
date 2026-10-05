@@ -7,4 +7,4 @@ crossrepo creates, syncs and removes the same git worktree branch across many si
 
 crossrepo is in early development and has no usable release yet. See [Install](install/) for the current state.
 
-The source code is on [GitHub](https://github.com/AlexSuprun/crossrepo).
+The source code is on [GitHub](https://github.com/alexsuprun/crossrepo).

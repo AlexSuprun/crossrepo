@@ -52,7 +52,7 @@ cd docs && bun install && bun run dev
 
 ## Where to ask
 
-Ask questions in [GitHub Discussions](https://github.com/AlexSuprun/crossrepo/discussions).
+Ask questions in [GitHub Discussions](https://github.com/alexsuprun/crossrepo/discussions).
 
 ## No CLA
 
