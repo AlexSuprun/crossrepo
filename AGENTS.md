@@ -59,4 +59,6 @@ Each folder in `src/` is one layer. A layer may import only the layers in its ro
 
 ## Docs
 
-User docs live only in `docs/src/content/docs/`. Do not copy them anywhere else.
+User docs live only in `docs/src/content/docs/`, as plain Markdown. Do not copy them anywhere else.
+
+`docs/` is its own package with its own `bun.lock`, outside Biome, the tsconfigs and `bun run validate`. Preview the site with `cd docs && bun install && bun run dev`.

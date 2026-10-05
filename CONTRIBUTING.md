@@ -30,11 +30,11 @@ Use [Conventional Commits](https://www.conventionalcommits.org/) such as `feat: 
 
 ## CI
 
-Every pull request runs CI on Linux, macOS and Windows: `checks` (lint, typecheck, unit, adapter and command tests), `smoke` (smoke tests under Node 22.13 and Node 24), `bun-only` (the bundle under the pinned Bun and Bun 1.3.0 with Node removed from PATH) and `pr-title`. All of them must pass before merge.
+Every pull request runs CI. On Linux, macOS and Windows: `checks` (lint, typecheck, unit, adapter and command tests), `smoke` (smoke tests under Node 22.13 and Node 24) and `bun-only` (the bundle under the pinned Bun and Bun 1.3.0 with Node removed from PATH). On Linux only: `docs build` (builds the docs site) and `pr-title`. All of them must pass before merge.
 
 ## Dependency updates
 
-[Renovate](https://docs.renovatebot.com/) keeps dev dependencies, GitHub Action hashes and the Bun version in `packageManager` up to date (see `renovate.json`). Every Monday it opens grouped pull requests with the `dependencies` label: one for all minor and patch updates, one for each major update and one for Bun. The "Dependency Dashboard" issue lists pending and upcoming updates. You do not need to bump these by hand.
+[Renovate](https://docs.renovatebot.com/) keeps dev dependencies, GitHub Action hashes and the Bun version in `packageManager` up to date (see `renovate.json`). Every Monday it opens grouped pull requests with the `dependencies` label: one for all minor and patch updates, one for each major update, one for Bun and one for the docs site in `docs/`. The "Dependency Dashboard" issue lists pending and upcoming updates. You do not need to bump these by hand.
 
 ## Changesets
 
@@ -43,6 +43,12 @@ Once releases start, every pull request adds one changeset that describes the ch
 ## Docs in the same pull request
 
 User docs live in `docs/src/content/docs/`. When your change affects users, update the docs in the same pull request.
+
+The docs site is published at <https://alexsuprun.github.io/crossrepo/>. To preview it locally:
+
+```sh
+cd docs && bun install && bun run dev
+```
 
 ## Where to ask
 
